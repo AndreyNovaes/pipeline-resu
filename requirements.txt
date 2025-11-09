@@ -2,11 +2,14 @@
 # Instale com: pip install -r requirements.txt
 
 # Framework Web
-Flask==3.0.0
+Flask==3.0.3
 
 # APIs de IA
-google-generativeai==0.3.2
-openai==1.6.1
+google-generativeai==0.8.3
+openai==1.54.0
 
 # Gerenciamento de Variáveis de Ambiente
-python-dotenv==1.0.0
+python-dotenv==1.0.1
+
+# Dependências adicionais
+httpx==0.27.2

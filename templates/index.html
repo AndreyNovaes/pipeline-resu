@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currículo IA - Otimize seu Currículo com Inteligência Artificial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Cabeçalho -->
+        <header>
+            <h1>📄 Currículo IA</h1>
+            <p class="subtitle">Otimize seu currículo automaticamente usando Inteligência Artificial</p>
+        </header>
+
+        <!-- Formulário Principal -->
+        <main>
+            <form id="curriculo-form">
+                <!-- Campo: Descrição da Vaga -->
+                <div class="form-group">
+                    <label for="job-description">
+                        <span class="label-icon">💼</span>
+                        Descrição da Vaga
+                    </label>
+                    <textarea
+                        id="job-description"
+                        name="job_description"
+                        rows="8"
+                        placeholder="Cole aqui a descrição completa da vaga de emprego que você está interessado(a)..."
+                        required
+                    ></textarea>
+                    <small class="hint">Inclua requisitos, responsabilidades e informações sobre a empresa</small>
+                </div>
+
+                <!-- Campo: Currículo Base -->
+                <div class="form-group">
+                    <label for="base-cv">
+                        <span class="label-icon">📋</span>
+                        Seu Currículo Base
+                    </label>
+                    <textarea
+                        id="base-cv"
+                        name="base_cv"
+                        rows="12"
+                        placeholder="Cole aqui seu currículo atual (em texto)..."
+                        required
+                    ></textarea>
+                    <small class="hint">Forneça seu currículo completo com experiências, habilidades e formação</small>
+                </div>
+
+                <!-- Botão de Submissão -->
+                <div class="form-actions">
+                    <button type="submit" id="submit-btn" class="btn-primary">
+                        <span class="btn-icon">✨</span>
+                        Otimizar Currículo Agora
+                    </button>
+                </div>
+            </form>
+
+            <!-- Indicador de Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Processando seu currículo...</p>
+                <small class="loading-detail">Este processo pode levar alguns minutos</small>
+            </div>
+
+            <!-- Área de Resultado -->
+            <div id="result-container" class="result-container hidden">
+                <div class="result-header">
+                    <h2 id="result-title">Currículo Otimizado</h2>
+                    <button id="copy-btn" class="btn-copy" title="Copiar para área de transferência">
+                        📋 Copiar
+                    </button>
+                </div>
+                <pre id="result-text" class="result-text"></pre>
+            </div>
+
+            <!-- Área de Erro -->
+            <div id="error-container" class="error-container hidden">
+                <div class="error-icon">⚠️</div>
+                <h3>Ops! Ocorreu um erro</h3>
+                <p id="error-message"></p>
+                <button id="retry-btn" class="btn-secondary">Tentar Novamente</button>
+            </div>
+        </main>
+
+        <!-- Rodapé -->
+        <footer>
+            <p>
+                Powered by <strong>Gemini AI</strong> & <strong>Perplexity AI</strong>
+            </p>
+            <small>
+                Seus dados são processados de forma segura e não são armazenados
+            </small>
+        </footer>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

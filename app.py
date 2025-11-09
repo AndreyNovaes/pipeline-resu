@@ -46,25 +46,43 @@ def call_gemini_with_retry(prompt, max_retries=2):
     Raises:
         Exception: Se todas as tentativas falharem
     """
-    model = genai.GenerativeModel('gemini-pro')
+    # Usar modelo atualizado do Gemini (gemini-1.5-flash é mais rápido e econômico)
+    model = genai.GenerativeModel('gemini-1.5-flash')
     attempts = 0
 
     while attempts <= max_retries:
         try:
-            response = model.generate_content(prompt)
+            # Configuração de geração para respostas mais previsíveis
+            generation_config = {
+                'temperature': 0.7,
+                'top_p': 0.95,
+                'top_k': 40,
+                'max_output_tokens': 8192,
+            }
+
+            response = model.generate_content(
+                prompt,
+                generation_config=generation_config
+            )
+
+            # Verificar se a resposta tem conteúdo
+            if not response.text:
+                raise Exception("Resposta vazia do Gemini")
+
             return response.text
 
         except Exception as e:
             error_message = str(e).lower()
+            print(f"Erro na tentativa {attempts + 1}: {error_message}")
 
-            # Verificar se é um erro de rate limit
-            if 'rate' in error_message or 'quota' in error_message or 'limit' in error_message:
+            # Verificar se é um erro de rate limit ou quota
+            if 'rate' in error_message or 'quota' in error_message or 'limit' in error_message or 'resource' in error_message:
                 attempts += 1
                 if attempts <= max_retries:
-                    print(f"Rate limit atingido. Aguardando 60 segundos antes da tentativa {attempts + 1}/{max_retries + 1}...")
+                    print(f"Rate limit/quota atingido. Aguardando 60 segundos antes da tentativa {attempts + 1}/{max_retries + 1}...")
                     time.sleep(60)
                 else:
-                    raise Exception(f"Falha após {max_retries + 1} tentativas devido a rate limit")
+                    raise Exception(f"Falha após {max_retries + 1} tentativas devido a rate limit/quota")
             else:
                 # Se não for rate limit, lançar o erro imediatamente
                 raise Exception(f"Erro ao chamar Gemini: {str(e)}")
